@@ -2,13 +2,22 @@ package com.base.engine;
 
 public class Game {
     private Mesh mesh = new Mesh();
+    private Shader shader = new Shader();
+    float temp = 0.0f;
+    private Transform transform = new Transform();
 
     public Game() {
         Vertex[] vertices = new Vertex[] {
                 new Vertex(new Vector3f(-1, -1, 0)),
-                new Vertex(new Vector3f(-1, 1, 0)),
-                new Vertex(new Vector3f(0, 1, 0))};
+                new Vertex(new Vector3f(0, 1, 0)),
+                new Vertex(new Vector3f(1, -1, 0))
+            };
         mesh.addVertices(vertices);
+        
+        shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
+        shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
+        shader.compileShader();
+        shader.addUniform("transform");
     }
 
     public void input() {
@@ -27,9 +36,14 @@ public class Game {
         }
     }
 
-    public void update() {}
+    public void update() {
+        temp += Time.getDelta();
+        transform.setTranslation((float) Math.sin(temp), 0, 0);
+    }
 
     public void render() {
+        shader.bind();
+        shader.setUniform("transform", transform.getTransformation());
         mesh.draw();
     }
 }

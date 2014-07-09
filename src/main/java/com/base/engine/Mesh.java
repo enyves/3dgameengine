@@ -15,7 +15,7 @@ public class Mesh {
     }
 
     public void addVertices(Vertex[] vertices) {
-        size = vertices.length * Vertex.SIZE;
+        size = vertices.length;
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, Util.createFlippedBuffer(vertices), GL_STATIC_DRAW);
     }

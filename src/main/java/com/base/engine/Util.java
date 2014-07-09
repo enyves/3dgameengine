@@ -16,4 +16,16 @@ public class Util {
         buffer.flip();
         return buffer;
     }
+    
+    public static FloatBuffer createFlippedFloatBuffer(Matrix4f matrix) {
+        FloatBuffer buffer = createFloatBuffer(Matrix4f.DIMENSION * Matrix4f.DIMENSION);
+        for (int i = 0; i < Matrix4f.DIMENSION; i++) {
+            for (int j = 0; j < Matrix4f.DIMENSION; j++) {
+                buffer.put(matrix.get(i, j));
+            }
+        }
+        
+        buffer.flip();
+        return buffer;
+    }
 }
