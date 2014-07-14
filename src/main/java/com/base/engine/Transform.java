@@ -1,11 +1,9 @@
 package com.base.engine;
 
 public class Transform {
-    private Vector3f translation;
-    
-    public Transform() {
-        translation = new Vector3f(0, 0, 0);
-    }
+    private Vector3f translation = new Vector3f(0, 0, 0);
+    private Vector3f rotation = new Vector3f(0, 0, 0);
+    private Vector3f scale = new Vector3f(0, 0, 0);
 
     public Vector3f getTranslation() {
         return translation;
@@ -21,6 +19,16 @@ public class Transform {
     
     public Matrix4f getTransformation() {
         Matrix4f translationMatrix = new Matrix4f().initTranslation(translation);
-        return translationMatrix;
+        Matrix4f rotationMatrix = new Matrix4f().initRotation(rotation);
+        Matrix4f scaleMatrix = new Matrix4f().initScale(scale);
+        return translationMatrix.mul(rotationMatrix.mul(scaleMatrix));
+    }
+    
+    public void setRotation(Vector3f rotation) {
+        this.rotation = rotation;
+    }
+    
+    public void setScale(Vector3f scale) {
+        this.scale = scale;
     }
 }
