@@ -3,6 +3,7 @@ package com.base.engine;
 import static org.lwjgl.BufferUtils.*;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class Util {
 
@@ -13,6 +14,13 @@ public class Util {
             buffer.put(vertices[i].getPosition().getY());
             buffer.put(vertices[i].getPosition().getZ());
         }
+        buffer.flip();
+        return buffer;
+    }
+    
+    public static IntBuffer createFlippedBuffer(int[] values) {
+        IntBuffer buffer = createIntBuffer(values.length);
+        buffer.put(values);
         buffer.flip();
         return buffer;
     }
